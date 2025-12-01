@@ -9,11 +9,25 @@ const userSchema=new mongoose.Schema({
     }
     ,passwordHash:{
         type:String
-    }
-    ,isActive:{
-        type:boolean
-    }
-    ,refreshToken:{
+    },
+    role:{
+        type: String,
+        enum: ['customer','admin'],
+        default:'customer'
+    },
+    isActive:{
+        type:Boolean
+    },
+    totalSpend:{
+        type:Number
+    },
+    totalOrders:{
+        type:Number
+    },
+    loyalPoints:{
+        type:Number
+    },
+    refreshToken:{
         type:String
     }
 })
