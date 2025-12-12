@@ -7,7 +7,6 @@ const router = express.Router() ;
 
 router.post('/tables',createTable )
 router.get('/tables/:slug' , getTableBySlug)
-
-//end point first isko access krne k liye user login(authenticate) rahega then uska role(authorization) => admin 
+ 
 router.get('/tables' , verifyToken , checkRole(['admin']), getAllTables)
 export default router

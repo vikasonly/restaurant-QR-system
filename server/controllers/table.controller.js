@@ -7,13 +7,13 @@ export const createTable = async (req, res) => {
   try {
     const { tableNumber, capacity } = req.body;
 
-    // Generate QR slug
+   
     const qrSlug = crypto.randomBytes(6).toString('hex');
 
-    // Generate QR scanning URL
+  
     const qrCodeURL = `http://localhost:5173/welcome?qr=${qrSlug}`;
 
-    // Generate QR image (Data URL)
+    
     QRCode.toDataURL(qrCodeURL, async (err, url) => {
       console.log(url);
       const qrImage = url;
@@ -33,7 +33,7 @@ export const createTable = async (req, res) => {
       });
     });
 
-    // Save table
+   
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -41,11 +41,10 @@ export const createTable = async (req, res) => {
   }
 };
 
-//get table by slug ;
-// http://localhost:3000/table/qr/:slug
+
 export const getTableBySlug = async(req,res, next) => {
   try {
-    //params //query params //req.body ;
+    
     const {slug}  = req.params  ;
     console.log(typeof slug)
     const filterObject = {qrSlug : slug , isActive : true} ;
@@ -68,7 +67,7 @@ res.status(200).json({
 }
 
 
-//NOTE  task => getAlltables => admin verfiyToken ,checkRole(['admin'])
+
 export const getAllTables = async(req,res, next)=>{
   try {
     const tables = await Table.find();
@@ -82,16 +81,3 @@ export const getAllTables = async(req,res, next)=>{
     next(error)
   }
 }
-
-//update //delete
-
-
-//GLOBAL ERROR HANDLER ? 
-
-//middleware route pehle
-//route k baad aur controller se pehle 
-
-//last controller => error aaya => catch block => next(error) => middleware(globalerror handler) => (err,res,req,next)=> {
-  
-//http://localhost:3000/tables/qr/3423erewrwe =< number table
-  //continue as guest 
