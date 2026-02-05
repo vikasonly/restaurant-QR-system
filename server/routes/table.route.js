@@ -7,6 +7,8 @@ const router = express.Router() ;
 
 router.post('/tables',createTable )
 router.get('/tables/:slug' , getTableBySlug)
- 
+
+
 router.get('/tables' , verifyToken , checkRole(['admin']), getAllTables)
 export default router
+

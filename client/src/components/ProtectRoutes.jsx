@@ -1,19 +1,21 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
+import AuthenticatedLayout from './AuthenticatedLayout';
 
 function ProtectRoutes({children}) {
-    console.log(children)
     const accessToken = localStorage.getItem('accessToken');
-    console.log(accessToken)
-    if(!accessToken){
+    const sessionToken = localStorage.getItem('sessionToken');
+    
+    // Allow access if user has either accessToken (logged in) or sessionToken (guest)
+    if(!accessToken && !sessionToken){
         return <Navigate to='/login'/>
     }
-    // if(accessToken){
-    //     return <Navigate to='/'/>
-    // }
+    
   return (
     <div>
- {children}
+      <AuthenticatedLayout>
+      {children}
+      </AuthenticatedLayout>
     </div>
   )
 }

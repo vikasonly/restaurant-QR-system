@@ -1,9 +1,15 @@
-import {configureStore} from '@reduxjs/toolkit'
-import authReducer from './authSlice'
-const store =configureStore({
-    reducer:{
-        auth:authReducer
-    }
-})
-console.log(store)
-export default store
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./authSlice.js";
+import guestReducer from "./guestSlice.js";
+import menuReducer from "./menuSlice.js";
+import cartReducer from './cartSlice';
+const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    guest: guestReducer,
+    menu: menuReducer,
+    cart: cartReducer, 
+  },
+});
+
+export default store;

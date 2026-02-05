@@ -1,163 +1,163 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Mail, Lock, Phone, User, UserPlus, ArrowRight } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { register } from "../redux/authSlice";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { User, Mail, Phone, Lock, ArrowRight } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/authSlice';
+import { ChefHat } from 'lucide-react';
 
 const Register = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
   });
 
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(register(formData));
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 flex flex-col items-center justify-center px-3 py-2">
 
-      {/* Static background gradient (NO animation) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-orange-500/10 to-yellow-500/20"></div>
-
-      {/* Static color glows */}
-      <div className="absolute w-64 h-64 bg-red-500/20 blur-[120px] rounded-full top-10 left-10"></div>
-      <div className="absolute w-64 h-64 bg-yellow-500/20 blur-[130px] rounded-full bottom-10 right-10"></div>
-
-      {/* Card */}
-      <div className="w-full max-w-lg bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-[0_0_40px_rgba(255,100,50,0.4)]">
-
-        {/* Logo */}
-        <div className="flex flex-col items-center mb-6">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png
-"
-            alt="Restaurant Logo"
-            className="w-20 drop-shadow-[0_0_8px_rgba(255,150,50,0.7)]"
-          />
-          <h1 className="text-3xl mt-3 font-extrabold text-orange-400 drop-shadow-[0_0_10px_rgba(255,150,50,0.6)]">
-            Restaurant Hub
-          </h1>
-          <p className="text-gray-300 text-sm mt-1">A Taste That Brings You Back</p>
+      {/* Brand Header */}
+      <div className="flex flex-col items-center mb-3">
+        <div className="w-12 h-12 border-2 border-sky-500 rounded-full flex items-center justify-center">
+          <ChefHat className="w-6 h-6 text-sky-500" />
         </div>
+        <h1 className="text-lg font-semibold text-white mt-2">
+          TasteBox
+        </h1>
+        <p className="text-xs text-slate-400 text-center">
+          Quick Bites. Big Taste.
+        </p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Register Card */}
+      <div className="w-full max-w-xs bg-slate-800 rounded-2xl shadow-lg border border-slate-700 p-4">
 
-          {/* Name */}
-          <div className="relative">
-            <User className="absolute left-3 top-3 w-5 h-5 text-orange-400" />
-            <input
-              type="text"
-              name="name"
-              className="w-full bg-transparent border border-white/15 rounded-xl pl-12 pr-3 py-3 text-gray-100 placeholder-gray-500 focus:border-orange-400 transition"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+        <h2 className="text-lg font-semibold text-white mb-1">
+          Create Account
+        </h2>
+        <p className="text-xs text-slate-400 mb-3">
+          Sign up in less than a minute
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-2">
+
+          {/* Full Name */}
+          <div>
+            <label className="text-xs text-slate-400">Full Name</label>
+            <div className="relative mt-1">
+              <User className="absolute left-2 top-2.5 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full pl-9 py-2 rounded-xl border border-slate-600 bg-slate-900 text-white text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                placeholder="Enter your name"
+              />
+            </div>
           </div>
 
           {/* Email */}
-          <div className="relative">
-            <Mail className="absolute left-3 top-3 w-5 h-5 text-orange-400" />
-            <input
-              type="email"
-              name="email"
-              className="w-full bg-transparent border border-white/15 rounded-xl pl-12 pr-3 py-3 text-gray-100 placeholder-gray-500 focus:border-orange-400 transition"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-            />
+          <div>
+            <label className="text-xs text-slate-400">Email Address</label>
+            <div className="relative mt-1">
+              <Mail className="absolute left-2 top-2.5 w-4 h-4 text-slate-400" />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full pl-9 py-2 rounded-xl border border-slate-600 bg-slate-900 text-white text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                placeholder="you@example.com"
+              />
+            </div>
           </div>
 
           {/* Phone */}
-          <div className="relative">
-            <Phone className="absolute left-3 top-3 w-5 h-5 text-orange-400" />
-            <input
-              type="tel"
-              name="phone"
-              maxLength="15"
-              className="w-full bg-transparent border border-white/15 rounded-xl pl-12 pr-3 py-3 text-gray-100 placeholder-gray-500 focus:border-orange-400 transition"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-            />
+          <div>
+            <label className="text-xs text-slate-400">Mobile Number</label>
+            <div className="relative mt-1">
+              <Phone className="absolute left-2 top-2.5 w-4 h-4 text-slate-400" />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full pl-9 py-2 rounded-xl border border-slate-600 bg-slate-900 text-white text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                placeholder="9876543210"
+              />
+            </div>
           </div>
 
           {/* Password */}
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 w-5 h-5 text-orange-400" />
-            <input
-              type="password"
-              name="password"
-              className="w-full bg-transparent border border-white/15 rounded-xl pl-12 pr-3 py-3 text-gray-100 placeholder-gray-500 focus:border-orange-400 transition"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
+          <div>
+            <label className="text-xs text-slate-400">Password</label>
+            <div className="relative mt-1">
+              <Lock className="absolute left-2 top-2.5 w-4 h-4 text-slate-400" />
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full pl-9 py-2 rounded-xl border border-slate-600 bg-slate-900 text-white text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                placeholder="Min 6 characters"
+              />
+            </div>
           </div>
 
           {/* Confirm Password */}
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 w-5 h-5 text-orange-400" />
-            <input
-              type="password"
-              className="w-full bg-transparent border border-white/15 rounded-xl pl-12 pr-3 py-3 text-gray-100 placeholder-gray-500 focus:border-orange-400 transition"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange }
-            />
+          <div>
+            <label className="text-xs text-slate-400">Confirm Password</label>
+            <div className="relative mt-1">
+              <Lock className="absolute left-2 top-2.5 w-4 h-4 text-slate-400" />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full pl-9 py-2 rounded-xl border border-slate-600 bg-slate-900 text-white text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                placeholder="Re-enter password"
+              />
+            </div>
           </div>
 
-          {/* Terms */}
-          <div className="flex items-start gap-2">
-            <input type="checkbox" className="mt-[4px]" />
-            <p className="text-xs text-gray-400">
-              I agree to the{" "}
-              <span className="text-orange-300">Terms</span> &{" "}
-              <span className="text-orange-300">Privacy Policy</span>
-            </p>
-          </div>
-
-          {/* Button */}
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-orange-600 to-red-500 text-white py-3 rounded-xl 
-            font-semibold text-sm flex items-center justify-center gap-2 
-            hover:shadow-[0_0_20px_rgba(255,80,50,0.6)] transition active:scale-95"
+            className="w-full bg-sky-500 hover:bg-sky-600 text-white py-2 rounded-xl font-semibold transition text-sm"
           >
-            <UserPlus className="w-5 h-5" />
             Create Account
           </button>
         </form>
 
-        {/* Footer */}
-        <p className="text-center text-gray-400 text-sm mt-6">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-orange-300 hover:underline inline-flex items-center gap-1"
-          >
-            Sign in <ArrowRight className="w-4 h-4" />
+        <p className="text-xs text-center text-slate-400 mt-3">
+          Already have an account?{' '}
+          <Link to="/login" className="text-sky-400 font-medium inline-flex items-center gap-1">
+            Login <ArrowRight className="w-3 h-3" />
           </Link>
         </p>
       </div>
+
+      {/* Footer Benefits */}
+      <div className="mt-3 text-xs text-slate-400 flex flex-col sm:flex-row justify-center items-center gap-2">
+        <span>✔ Fast checkout</span>
+        <span>✔ Exclusive offers</span>
+        <span>✔ Reward points</span>
+      </div>
+
     </div>
   );
 };

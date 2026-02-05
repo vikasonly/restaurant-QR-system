@@ -3,82 +3,101 @@ import axios from 'axios';
 
 export const login = createAsyncThunk('/auth/login', async (data, thunkApi) => {
   try {
-    console.log(thunkApi)
+    console.log(thunkApi);
     const res = await axios.post(
       'http://localhost:3000/api/v1/auth/login',
       data
     );
     return res.data;
   } catch (error) {
-    console.log(error)
-    return thunkApi.rejectWithValue(error.response.data.message)
+    console.log(error);
+    return thunkApi.rejectWithValue(error.response.data.message);
   }
 });
 
-export const register = createAsyncThunk('/auth/register', async (data, thunkApi) => {
-  try {
-    console.log(thunkApi)
-    const res = await axios.post(
-      'http://localhost:3000/api/v1/auth/register',
-      data
-    );
-    return res.data;
-  } catch (error) {
-    console.log(error)
-    return thunkApi.rejectWithValue(error.response.data.message)
+export const register = createAsyncThunk(
+  '/auth/register',
+  async (data, thunkApi) => {
+    try {
+      console.log(thunkApi);
+      const res = await axios.post(
+        'http://localhost:3000/api/v1/auth/register',
+        data
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return thunkApi.rejectWithValue(error.response.data.message);
+    }
   }
-});
+);
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     loading: false,
     error: null,
-    name: null,
-    role : null,
+    name: localStorage.getItem('name') || null,
+    role: localStorage.getItem('role') || null,
     email: null,
     accessToken: null,
-    refreshToken : null ,
+    refreshToken: null,
+  },
+  reducers: {
+    logout: (state) => {
+      state.name = null;
+      state.email = null;
+      state.role = null;
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('name');
+      localStorage.removeItem('role');
+      state.refreshToken = null;
+      state.accessToken = null;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state,) => {
+      .addCase(login.pending, (state) => {
         state.loading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log(action.payload,action.payload.data.name , action.payload.data.email,action.payload.accessToken)
-        state.name = action.payload.data.name 
-        state.email = action.payload.data.email 
-        state.accessToken = action.payload.accessToken 
-        state.role = action.payload.data.role
-        state.refreshToken = action.payload.refreshToken
-        localStorage.setItem('accessToken', action.payload.accessToken)
-        localStorage.setItem('refreshToken', action.payload.refreshToken)
-        state.loading = false
+        console.log(
+          action.payload,
+          action.payload.data.name,
+          action.payload.data.email,
+          action.payload.accessToken
+        );
+        state.name = action.payload.data.name;
+        state.email = action.payload.data.email;
+        state.accessToken = action.payload.accessToken;
+        state.role = action.payload.data.role;
+        state.refreshToken = action.payload.refreshToken;
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        localStorage.setItem('role', action.payload.data.role);
+        localStorage.setItem('name', action.payload.data.name);
+        state.loading = false;
       })
       .addCase(login.rejected, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
         state.error = action.payload;
-        state.loading = false
-      }) .addCase(register.pending, (state, ) => {
+        state.loading = false;
+      })
+      .addCase(register.pending, (state) => {
         state.loading = true;
       })
       .addCase(register.fulfilled, (state, action) => {
-        console.log(action.payload)
-        state.loading = false
+        console.log(action.payload);
+        state.loading = false;
       })
       .addCase(register.rejected, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
         state.error = action.payload;
-        state.loading = false
+        state.loading = false;
       });
   },
 });
 
-// console.log(authSlice);
+
 
 export default authSlice.reducer;
-
-//auth //tables //menu
-//authSlice
-//tableSlice
-//menuSlice =>
+export const { logout } = authSlice.actions;
